@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-
-using Grpc.Core;
+﻿using Grpc.Core;
 using MagicOnion.Client;
 using MagicOnion.Server;
 using System;
@@ -23,19 +21,19 @@ namespace MagicOnion.Tests
     {
         static StreamingContextGroup<string, IStreamingContextGroupTestService> group = new StreamingContextGroup<string, IStreamingContextGroupTestService>();
 
-        public async Task<UnaryResult<bool>> Register()
+        public Task<UnaryResult<bool>> Register()
         {
             var connection = this.GetConnectionContext();
             var id = connection.ConnectionId;
             group.Add(id, new StreamingContextRepository<IStreamingContextGroupTestService>(connection));
-            return UnaryResult(true);
+            return Task.FromResult(UnaryResult(true));
         }
 
-        public async Task<UnaryResult<bool>> Unregister()
+        public Task<UnaryResult<bool>> Unregister()
         {
             var id = this.GetConnectionContext().ConnectionId;
             group.Remove(id);
-            return UnaryResult(true);
+            return Task.FromResult(UnaryResult(true));
         }
 
         public async Task<UnaryResult<bool>> SendMessage(string message)
@@ -120,5 +118,3 @@ namespace MagicOnion.Tests
         }
     }
 }
-
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
