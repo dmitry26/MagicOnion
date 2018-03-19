@@ -47,8 +47,7 @@ namespace MagicOnion.Server
             this.ServiceType = classType;
             this.ServiceName = classType.GetInterfaces().First(x => x.GetTypeInfo().IsGenericType && x.GetGenericTypeDefinition() == typeof(IService<>)).GetGenericArguments()[0].Name;
             this.MethodInfo = methodInfo;
-            MethodType mt;
-            this.UnwrappedResponseType = UnwrapResponseType(methodInfo, out mt, out responseIsTask, out this.RequestType);
+            this.UnwrappedResponseType = UnwrapResponseType(methodInfo, out MethodType mt, out responseIsTask, out this.RequestType);
             this.MethodType = mt;
             this.resolver = options.FormatterResolver;
 
@@ -550,7 +549,7 @@ namespace MagicOnion.Server
         {
             if (result.hasRawValue && !context.IsIgnoreSerialization)
             {
-                var value = (result.rawTaskValue != null) ? await result.rawTaskValue.ConfigureAwait(false) : result.rawValue;
+				var value = await result.rawValueTask.ConfigureAwait(false);
 
                 var bytes = LZ4MessagePackSerializer.Serialize<T>(value, context.FormatterResolver);
                 context.Result = bytes;
@@ -562,7 +561,7 @@ namespace MagicOnion.Server
             var result = await taskResult.ConfigureAwait(false);
             if (result.hasRawValue && !context.IsIgnoreSerialization)
             {
-                var value = (result.rawTaskValue != null) ? await result.rawTaskValue.ConfigureAwait(false) : result.rawValue;
+				var value = await result.rawValueTask.ConfigureAwait(false);
 
                 var bytes = LZ4MessagePackSerializer.Serialize<T>(value, context.FormatterResolver);
                 context.Result = bytes;
