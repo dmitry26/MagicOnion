@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS1998
-
-using MagicOnion;
+﻿using MagicOnion;
 using MagicOnion.Server;
 using System;
 using System.Collections.Concurrent;
@@ -45,17 +43,17 @@ namespace Sandbox.ConsoleServer.Services
 
         public Task BroadcastJoinAsync(RoomMember joinMember)
         {
-            return this.group.BroadcastAllAsync(x => x.OnJoin, joinMember);
+			return this.group.BroadcastAllExceptAsync(x => x.OnJoin, joinMember, joinMember.Id);
         }
 
         public Task BroadcastLeaveAsync(RoomMember leaveMember)
         {
-            return this.group.BroadcastAllAsync(x => x.OnLeave, leaveMember);
+			return this.group.BroadcastAllExceptAsync(x => x.OnLeave, leaveMember, leaveMember.Id);
         }
 
         public Task BroadcastMessageAsync(RoomMember sendMember, string message)
         {
-            return this.group.BroadcastAllAsync(x => x.OnMessageReceived, new ChatMessage { Sender = sendMember, Message = message });
+			return this.group.BroadcastAllExceptAsync(x => x.OnMessageReceived, new ChatMessage { Sender = sendMember, Message = message }, sendMember.Id);
         }
 
         public ChatRoomResponse ToChatRoomResponse()
@@ -118,7 +116,7 @@ namespace Sandbox.ConsoleServer.Services
         // RoomCommand
 
 
-        public async UnaryResult<ChatRoomResponse> CreateNewRoom(string roomName, string nickName)
+        public UnaryResult<ChatRoomResponse> CreateNewRoom(string roomName, string nickName)
         {
             var room = new ChatRoom(Guid.NewGuid().ToString(), roomName);
             var member = new RoomMember(Guid.NewGuid().ToString(), nickName);
@@ -135,12 +133,12 @@ namespace Sandbox.ConsoleServer.Services
                 LeaveCore(t.Item1, t.Item2).Wait();
             }, Tuple.Create(room.Id, member.Id));
 
-            return room.ToChatRoomResponse();
+            return UnaryResult(room.ToChatRoomResponse());
         }
 
-        public async UnaryResult<ChatRoomResponse[]> GetRooms()
+        public UnaryResult<ChatRoomResponse[]> GetRooms()
         {
-            return RoomRepository.Default.GetRooms().Select(x => x.ToChatRoomResponse()).ToArray();
+            return UnaryResult(RoomRepository.Default.GetRooms().Select(x => x.ToChatRoomResponse()).ToArray());
         }
 
         public async UnaryResult<ChatRoomResponse> Join(string roomId, string nickName)
@@ -222,5 +220,3 @@ namespace Sandbox.ConsoleServer.Services
         }
     }
 }
-
-#pragma warning restore CS1998
