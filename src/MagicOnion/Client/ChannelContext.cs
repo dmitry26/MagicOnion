@@ -150,7 +150,9 @@ namespace MagicOnion.Client
             isDisposed = true;
 
             waitConnectComplete.TrySetCanceled();
-            latestStreamingResult.Dispose();
+			//Fix for "Exception while handling RPC"
+			latestStreamingResult.RequestStream.CompleteAsync().GetAwaiter().GetResult();
+			//latestStreamingResult.Dispose();
         }
 
         class UnregisterToken : IDisposable
