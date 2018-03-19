@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS1998
-
-using Grpc.Core;
+﻿using Grpc.Core;
 using MagicOnion;
 using MagicOnion.Client;
 using MagicOnion.Server;
@@ -19,10 +17,10 @@ namespace Sandbox.NetCoreApp
     // inehrit ServiceBase<interface>, interface
     public class MyFirstService : ServiceBase<IMyFirstService>, IMyFirstService
     {
-        public async UnaryResult<int> SumAsync(int x, int y)
+        public UnaryResult<int> SumAsync(int x, int y)
         {
             Logger.Debug($"Received:{x}, {y}");
-            return x + y;
+            return UnaryResult(x + y);
         }
     }
 
@@ -68,5 +66,3 @@ namespace Sandbox.NetCoreApp
         }
     }
 }
-
-#pragma warning restore CS1998
