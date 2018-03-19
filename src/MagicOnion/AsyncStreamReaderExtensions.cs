@@ -14,7 +14,7 @@ namespace MagicOnion
         {
             using (stream)
             {
-                while (!cancellation.IsCancellationRequested && await stream.MoveNext())
+                while (!cancellation.IsCancellationRequested && await stream.MoveNext().ConfigureAwait(false))
                 {
                     action(stream.Current);
                 }
@@ -25,9 +25,9 @@ namespace MagicOnion
         {
             using (stream)
             {
-                while (!cancellation.IsCancellationRequested && await stream.MoveNext())
+                while (!cancellation.IsCancellationRequested && await stream.MoveNext().ConfigureAwait(false))
                 {
-                    await asyncAction(stream.Current);
+                    await asyncAction(stream.Current).ConfigureAwait(false);
                 }
             }
         }
