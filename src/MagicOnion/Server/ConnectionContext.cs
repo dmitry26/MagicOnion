@@ -15,7 +15,7 @@ namespace MagicOnion.Server
         {
             get
             {
-                if (items == null) items = new ConcurrentDictionary<string, object>();
+                if (items == null) LazyInitializer.EnsureInitialized(ref items,() => new ConcurrentDictionary<string, object>());
                 return items;
             }
         }
@@ -77,8 +77,7 @@ namespace MagicOnion.Server
 
         public static ConnectionContext GetContext(string connectionId)
         {
-            ConnectionContext source;
-            if (manager.TryGetValue(connectionId, out source))
+            if (manager.TryGetValue(connectionId, out ConnectionContext source))
             {
                 return source;
             }
@@ -90,8 +89,7 @@ namespace MagicOnion.Server
 
         public static bool TryGetContext(string connectionId, out ConnectionContext context)
         {
-            ConnectionContext source;
-            if (manager.TryGetValue(connectionId, out source))
+            if (manager.TryGetValue(connectionId, out ConnectionContext source))
             {
                 context = source;
                 return true;
