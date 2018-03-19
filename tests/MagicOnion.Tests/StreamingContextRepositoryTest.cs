@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-
-using Grpc.Core;
+﻿using Grpc.Core;
 using MagicOnion.Client;
 using MagicOnion.Server;
 using System;
@@ -26,16 +24,16 @@ namespace MagicOnion.Tests
     {
         static StreamingContextRepository<IStreamingRepositoryTestService> cache;
 
-        public async Task<UnaryResult<bool>> Register()
+        public Task<UnaryResult<bool>> Register()
         {
             cache = new StreamingContextRepository<IStreamingRepositoryTestService>(this.GetConnectionContext());
-            return UnaryResult(true);
+            return Task.FromResult(UnaryResult(true));
         }
 
-        public async Task<UnaryResult<bool>> Unregister()
+        public Task<UnaryResult<bool>> Unregister()
         {
             cache.Dispose();
-            return UnaryResult(true);
+            return Task.FromResult(UnaryResult(true));
         }
 
         public async Task<UnaryResult<bool>> SendMessage(string message)
@@ -85,7 +83,7 @@ namespace MagicOnion.Tests
 
                 var tasks = Enumerable.Range(0, 100)
                     .Select(x => "Write:" + x.ToString())
-                    .Select(async x => (await client.SendMessage(x)).ResponseAsync)
+                    .Select(async x => (await client.SendMessage(x)).ResponseAsync.AsTask())
                     .Select(x => x.Unwrap())
                     .ToArray();
 
@@ -97,5 +95,3 @@ namespace MagicOnion.Tests
         }
     }
 }
-
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
