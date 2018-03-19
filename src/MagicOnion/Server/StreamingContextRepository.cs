@@ -125,7 +125,7 @@ namespace MagicOnion.Server
             return info;
         }
 
-        public async Task WriteAsync<TResponse>(Func<TService, Func<Task<ServerStreamingResult<TResponse>>>> methodSelector, TResponse value)
+        public async Task WriteAsync<TResponse>(Func<TService, Func<Task<ServerStreamingResult<TResponse>>>> methodSelector, TResponse value, bool throwIfNotFound = false)
         {
             if (isDisposed) throw new ObjectDisposedException("StreamingContextRepository", "already disposed(disconnected).");
 
@@ -147,13 +147,13 @@ namespace MagicOnion.Server
                     }
                 }
             }
-            else
+            else if (throwIfNotFound)
             {
-                throw new Exception("Does not exists streaming context. :" + methodSelector.GetMethodInfo().Name);
+				throw new InvalidOperationException("The streaming context does not exist: " + methodSelector.GetMethodInfo().Name);
             }
         }
 
-        public async Task Complete<TResponse>(Func<TService, Func<Task<ServerStreamingResult<TResponse>>>> methodSelector)
+        public async Task Complete<TResponse>(Func<TService, Func<Task<ServerStreamingResult<TResponse>>>> methodSelector, bool throwIfNotFound = false)
         {
             if (isDisposed) throw new ObjectDisposedException("StreamingContextRepository", "already disposed(disconnected).");
 
@@ -174,9 +174,9 @@ namespace MagicOnion.Server
                     }
                 }
             }
-            else
+            else if (throwIfNotFound)
             {
-                throw new Exception("Does not exists streaming context. :" + methodSelector.GetMethodInfo().Name);
+                throw new InvalidOperationException("The streaming context does not exist: " + methodSelector.GetMethodInfo().Name);
             }
         }
 
