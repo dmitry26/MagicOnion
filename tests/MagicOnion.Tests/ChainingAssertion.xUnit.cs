@@ -9,22 +9,22 @@
 
 /* -- Tutorial --
  * | at first, include this file on xUnit.net Project.
- * 
+ *
  * | three example, "Is" overloads.
- * 
+ *
  * // This same as Assert.Equal(25, Math.Pow(5, 2))
  * Math.Pow(5, 2).Is(25);
- * 
+ *
  * // This same as Assert.True("foobar".StartsWith("foo") && "foobar".EndWith("bar"))
  * "foobar".Is(s => s.StartsWith("foo") && s.EndsWith("bar"));
- * 
+ *
  * // This same as Assert.Equal(Enumerable.Range(1,5).ToArray(), new[]{1, 2, 3, 4, 5}.ToArray())
  * // it is sequence value compare
  * Enumerable.Range(1, 5).Is(1, 2, 3, 4, 5);
- * 
+ *
  * | CollectionAssert
  * | if you want to use CollectionAssert Methods then use Linq to Objects and Is
- * 
+ *
  * var array = new[] { 1, 3, 7, 8 };
  * array.Count().Is(4);
  * array.Contains(8).IsTrue(); // IsTrue() == Is(true)
@@ -34,7 +34,7 @@
  * array.OrderBy(x => x).Is(array); // IsOrdered
  *
  * | Other Assertions
- * 
+ *
  * // Null Assertions
  * Object obj = null;
  * obj.IsNull();             // Assert.Null(obj)
@@ -52,9 +52,9 @@
  * // Type Assertion
  * "foobar".IsInstanceOf<string>(); // Assert.IsType
  * (999).IsNotInstanceOf<double>(); // Assert.IsNotType
- * 
+ *
  * | Advanced Collection Assertion
- * 
+ *
  * var lower = new[] { "a", "b", "c" };
  * var upper = new[] { "A", "B", "C" };
  *
@@ -64,57 +64,57 @@
  *
  * // or you can use Linq to Objects - SequenceEqual
  * lower.SequenceEqual(upper, StringComparer.InvariantCultureIgnoreCase).Is(true);
- * 
+ *
  * | StructuralEqual
- * 
+ *
  * class MyClass
  * {
  *     public int IntProp { get; set; }
  *     public string StrField;
  * }
- * 
+ *
  * var mc1 = new MyClass() { IntProp = 10, StrField = "foo" };
  * var mc2 = new MyClass() { IntProp = 10, StrField = "foo" };
- * 
+ *
  * mc1.IsStructuralEqual(mc2); // deep recursive value equality compare
- * 
+ *
  * mc1.IntProp = 20;
  * mc1.IsNotStructuralEqual(mc2);
- * 
+ *
  * | DynamicAccessor
- * 
+ *
  * // AsDynamic convert to "dynamic" that can call private method/property/field/indexer.
- * 
+ *
  * // a class and private field/property/method.
  * public class PrivateMock
  * {
  *     private string privateField = "homu";
- * 
+ *
  *     private string PrivateProperty
  *     {
  *         get { return privateField + privateField; }
  *         set { privateField = value; }
  *     }
- * 
+ *
  *     private string PrivateMethod(int count)
  *     {
  *         return string.Join("", Enumerable.Repeat(privateField, count));
  *     }
  * }
- * 
+ *
  * // call private property.
  * var actual = new PrivateMock().AsDynamic().PrivateProperty;
  * Assert.AreEqual("homuhomu", actual);
- * 
+ *
  * // dynamic can't invoke extension methods.
  * // if you want to invoke "Is" then cast type.
  * (new PrivateMock().AsDynamic().PrivateMethod(3) as string).Is("homuhomuhomu");
- * 
+ *
  * // set value
  * var mock = new PrivateMock().AsDynamic();
  * mock.PrivateProperty = "mogumogu";
  * (mock.privateField as string).Is("mogumogu");
- * 
+ *
  * -- more details see project home --*/
 
 using System;
@@ -248,13 +248,19 @@ namespace Xunit
         }
 
         /// <summary>Assert.Null</summary>
-        public static void IsNull<T>(this T value)
+        public static void IsNull<T>(this T value) where T: class
         {
             Assert.Null(value);
         }
 
+		/// <summary>Assert.Null</summary>
+		public static void IsNull<T>(this T? value) where T : struct
+		{
+			Assert.Null(value);
+		}
+
         /// <summary>Assert.NotNull</summary>
-        public static void IsNotNull<T>(this T value)
+        public static void IsNotNull<T>(this T value) where T : class
         {
             Assert.NotNull(value);
         }
@@ -272,13 +278,13 @@ namespace Xunit
         }
 
         /// <summary>Assert.Same</summary>
-        public static void IsSameReferenceAs<T>(this T actual, T expected)
+        public static void IsSameReferenceAs<T>(this T actual, T expected) where T : class
         {
             Assert.Same(expected, actual);
         }
 
         /// <summary>Assert.NotSame</summary>
-        public static void IsNotSameReferenceAs<T>(this T actual, T notExpected)
+        public static void IsNotSameReferenceAs<T>(this T actual, T notExpected) where T : class
         {
             Assert.NotSame(notExpected, actual);
         }

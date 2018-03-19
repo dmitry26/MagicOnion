@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;net46;net47;</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;net461;net47;</TargetFrameworks>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' AND '$(TargetFramework)' == 'net46'">
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' AND '$(TargetFramework)' == 'net461'">
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
         <NoWarn>1701;1702;1705;1591</NoWarn>
-        <DefineConstants>DEBUG;NET_FRAMEWORK;net46;ENABLE_SAVE_ASSEMBLY;NON_UNITY;</DefineConstants>
+        <DefineConstants>DEBUG;NET_FRAMEWORK;net461;ENABLE_SAVE_ASSEMBLY;NON_UNITY;</DefineConstants>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU' AND '$(TargetFramework)' == 'net46'">
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU' AND '$(TargetFramework)' == 'net461'">
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
         <NoWarn>1701;1702;1705;1591</NoWarn>
-        <DefineConstants>RELEASE;NET_FRAMEWORK;net46;NON_UNITY;</DefineConstants>
-        <DocumentationFile>bin\Release\net46\MagicOnion.HttpGateway.xml</DocumentationFile>
+        <DefineConstants>RELEASE;NET_FRAMEWORK;net461;NON_UNITY;</DefineConstants>
+        <DocumentationFile>bin\Release\net461\MagicOnion.HttpGateway.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' AND '$(TargetFramework)' == 'net47'">
@@ -55,10 +55,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc" Version="1.4.0" />
-        <PackageReference Include="MessagePack" Version="1.7.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="1.1.2" />
-        <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+        <PackageReference Include="Grpc" Version="1.10.0" />
+        <PackageReference Include="MessagePack" Version="1.7.3.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.2" />
+        <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -71,5 +71,4 @@
     <ItemGroup>
         <Folder Include="Properties\" />
     </ItemGroup>
-
 </Project>

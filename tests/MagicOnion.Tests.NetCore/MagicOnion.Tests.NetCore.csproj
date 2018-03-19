@@ -1,28 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>    
+  <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\**\*.cs" Exclude="..\Properties\AssemblyInfo.cs" />
+    <Compile Include="..\MagicOnion.Tests\ArgumentPatternTest.cs" Link="ArgumentPatternTest.cs" />
+    <Compile Include="..\MagicOnion.Tests\ChainingAssertion.xUnit.cs" Link="ChainingAssertion.xUnit.cs" />
+    <Compile Include="..\MagicOnion.Tests\ClientConfigTest.cs" Link="ClientConfigTest.cs" />
+    <Compile Include="..\MagicOnion.Tests\FilterTest.cs" Link="FilterTest.cs" />
+    <Compile Include="..\MagicOnion.Tests\PartialDefinitionTest.cs" Link="PartialDefinitionTest.cs" />
+    <Compile Include="..\MagicOnion.Tests\ReturnStatusTest.cs" Link="ReturnStatusTest.cs" />
+    <Compile Include="..\MagicOnion.Tests\ServerErrorTest.cs" Link="ServerErrorTest.cs" />
+    <Compile Include="..\MagicOnion.Tests\SimpleTest.cs" Link="SimpleTest.cs" />
+    <Compile Include="..\MagicOnion.Tests\StreamingContextGroupTest.cs" Link="StreamingContextGroupTest.cs" />
+    <Compile Include="..\MagicOnion.Tests\StreamingContextRepositoryTest.cs" Link="StreamingContextRepositoryTest.cs" />
+    <Compile Include="..\MagicOnion.Tests\_ServerFixture.cs" Link="_ServerFixture.cs" />
+  </ItemGroup>  
+
+  <ItemGroup>
+    <PackageReference Include="Grpc" Version="1.10.0" />
+    <PackageReference Include="MessagePack" Version="1.7.3.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.1" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="..\MagicOnion.Tests.NetCore\obj\Debug\netcoreapp1.1\MagicOnion.Tests.NetCore.AssemblyInfo.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Grpc" Version="1.4.0" />
-    <PackageReference Include="MessagePack" Version="1.7.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\sandbox\NetStandardShare\NetStandardShare.csproj" />
     <ProjectReference Include="..\..\src\MagicOnion\MagicOnion.csproj" />
   </ItemGroup>
 

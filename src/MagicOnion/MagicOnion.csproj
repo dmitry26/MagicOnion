@@ -46,14 +46,12 @@
 
     <!-- NuGet -->
 
-    <ItemGroup Condition=" '$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net47' ">
-        <PackageReference Include="Grpc" Version="1.4.0" />
-        <PackageReference Include="MessagePack" Version="1.7.0" />
+    <ItemGroup>
+        <PackageReference Include="Grpc" Version="1.10.0" />
+        <PackageReference Include="MessagePack" Version="1.7.3.4" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-        <PackageReference Include="Grpc" Version="1.4.0" />
-        <PackageReference Include="MessagePack" Version="1.7.0" />
         <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
     </ItemGroup>
 
@@ -76,6 +74,10 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>DynamicArgumentTuple.tt</DependentUpon>
         </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Update="NETStandard.Library" Version="2.0.1" />
     </ItemGroup>
 
 </Project>

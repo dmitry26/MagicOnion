@@ -60,8 +60,9 @@ namespace MagicOnion.ConsoleServer
                 {
                     collection.Add(new ServiceDescriptor(typeof(MagicOnionServiceDefinition), service));
                 })
-                .UseWebListener()
-                .UseStartup<Startup>()
+				//.UseWebListener()
+				.UseHttpSys()
+				.UseStartup<Startup>()
                 .UseUrls(Configuration.GatewayHost)
                 .Build();
 

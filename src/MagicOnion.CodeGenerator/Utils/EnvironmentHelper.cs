@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 
 #if NET46
-using Microsoft.Build.MSBuildLocator;
+using Microsoft.Build.Locator;
 #endif
 
 namespace MagicOnion.Utils
