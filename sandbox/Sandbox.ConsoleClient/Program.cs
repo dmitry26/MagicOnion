@@ -80,19 +80,20 @@ namespace MagicOnion.ConsoleClient
             // create room
             var client = ctx.CreateClient<IChatRoomService>();
 
-            var room = await client.CreateNewRoom("test", "A");
-
             var waiter = (await client.OnJoin()).ResponseStream.ForEachAsync(xs =>
            {
                Console.WriteLine(xs);
            });
+
+			var room = await client.CreateNewRoom("test", "A");
 
             await client.Join(room.Id, "B");
 
             //var result = await await client.SendMessage(room.Id, "foo bar baz");
             // Console.WriteLine("Send success:" + result);
 
-            await waiter;
+            //await waiter;
+			await Console.In.ReadLineAsync().ConfigureAwait(false);
         }
 
 
@@ -206,7 +207,7 @@ namespace MagicOnion.ConsoleClient
             Task[] t = new Task[requestCount];
             for (int i = 0; i < requestCount; i++)
             {
-                t[i] = (client.SumAsync(i, i).ContinueWith(y => y.Result.ResponseAsync).Unwrap());
+                t[i] = (client.SumAsync(i, i).ContinueWith(y => y.Result.ResponseAsync.AsTask()).Unwrap());
             }
             await Task.WhenAll(t);
 
