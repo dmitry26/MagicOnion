@@ -248,16 +248,10 @@ namespace Xunit
         }
 
         /// <summary>Assert.Null</summary>
-        public static void IsNull<T>(this T value) where T: class
+        public static void IsNull<T>(this T value)
         {
-            Assert.Null(value);
+            Assert.Null((object)value);
         }
-
-		/// <summary>Assert.Null</summary>
-		public static void IsNull<T>(this T? value) where T : struct
-		{
-			Assert.Null(value);
-		}
 
         /// <summary>Assert.NotNull</summary>
         public static void IsNotNull<T>(this T value) where T : class
