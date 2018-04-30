@@ -39,6 +39,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStandardShare", "sandbox\NetStandardShare\NetStandardShare.csproj", "{A9E28AFD-4FEC-416A-9F85-C64F05605B22}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox.ConsoleServer2", "sandbox\Sandbox.ConsoleServer2\Sandbox.ConsoleServer2.csproj", "{7CF23E57-381B-428D-B44A-D5328A71414B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C79CE0BF-ED4C-47BE-822E-E82CF83FC68A} = {C79CE0BF-ED4C-47BE-822E-E82CF83FC68A}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicOnion.Tests.NetCore", "tests\MagicOnion.Tests.NetCore\MagicOnion.Tests.NetCore.csproj", "{A0E9C1EA-6E7F-4CF1-81D2-21EAC6ACAE67}"
 EndProject
