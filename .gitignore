@@ -12,7 +12,6 @@ TestResults
 *.suo
 *.user
 *.sln.docstates
-launchSettings.json
 
 # Build results
 [Dd]ebug/
@@ -59,7 +58,7 @@ _ReSharper*
 *.ncrunch*
 .*crunch*.local.xml
 
-# Installshield output folder 
+# Installshield output folder
 [Ee]xpress
 
 # DocProject is a documentation generator add-in
@@ -115,6 +114,10 @@ src/MagicOnion.Client.Unity/bin/*
 src/MagicOnion.Client.Unity/Library/*
 src/MagicOnion.Client.Unity/obj/*
 src/MagicOnion.Client.Unity/Temp/*
+
+# moc
+
+src\MagicOnion.CodeGenerator\Generator/*Template.cs
 
 nuget/tools/*
 nuget/*.nupkg

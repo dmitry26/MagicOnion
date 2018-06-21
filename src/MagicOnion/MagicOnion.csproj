@@ -60,7 +60,7 @@
     <!-- NuGet -->
 
     <ItemGroup>
-        <PackageReference Include="Grpc" Version="1.11.0" />
+        <PackageReference Include="Grpc" Version="1.12.0" />
         <PackageReference Include="MessagePack" Version="1.7.3.4" />
     </ItemGroup>
 
@@ -90,7 +90,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Update="NETStandard.Library" Version="2.0.1" />
+      <PackageReference Update="NETStandard.Library" Version="2.0.3" />
     </ItemGroup>
 
 </Project>

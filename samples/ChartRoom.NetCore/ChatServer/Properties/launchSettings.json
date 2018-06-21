@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Samples.NetCore.ChatServer": {
+      "commandName": "Project",
+      "environmentVariables": {        
+        "ASPNETCORE_URLS": "http://localhost:5432",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
