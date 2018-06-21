@@ -1,7 +1,10 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using MagicOnion.CodeGenerator;
+using Microsoft.Build.Locator;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MagicOnion.CodeAnalysis
 {
@@ -43,10 +46,9 @@ namespace MagicOnion.CodeAnalysis
         readonly ReferenceSymbols typeReferences;
         readonly INamedTypeSymbol baseInterface;
 
-        public MethodCollector(string csProjPath, IEnumerable<string> conditinalSymbols)
+        protected MethodCollector(string csProjPath, Compilation compilation)
         {
             this.csProjPath = csProjPath;
-            var compilation = RoslynExtensions.GetCompilationFromProject(csProjPath, conditinalSymbols.ToArray()).GetAwaiter().GetResult();
             this.typeReferences = new ReferenceSymbols(compilation);
 
             var marker = compilation.GetTypeByMetadataName("MagicOnion.IServiceMarker");
@@ -64,6 +66,17 @@ namespace MagicOnion.CodeAnalysis
                 .Where(t => t != baseInterface)
                 .Where(x => !x.IsGenericType || x.ConstructedFrom != baseInterface)
                 .ToArray();
+        }
+
+        public static async Task<MethodCollector> CreateCollector(string csProjPath,IEnumerable<string> conditinalSymbols,
+            string framework,bool quiet)
+        {
+            MSBuildLocator.RegisterDefaults();
+
+            var compilation = await RoslynExtensions.GetCompilationFromProject(csProjPath,framework,quiet,
+                conditinalSymbols.ToArray());
+
+            return new MethodCollector(csProjPath,compilation);
         }
 
         // not visitor pattern:)

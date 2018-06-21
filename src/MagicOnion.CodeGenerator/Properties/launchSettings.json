@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MagicOnion.CodeGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "-i\"..\\..\\..\\..\\..\\sandbox\\Sandbox.ConsoleServerDefinition\\Sandbox.ConsoleServerDefinition.csproj\" -o=\"MagicOnionGenerated.cs\""
+    }
+  }
+}

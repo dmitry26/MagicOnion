@@ -22,6 +22,8 @@ namespace MagicOnion.CodeGenerator
         public bool IsAsyncSuffix { get; private set; }
         public List<string> ConditionalSymbols { get; private set; }
         public string NamespaceRoot { get; private set; }
+        public string TargetFramework { get; private set; }
+        public bool Quiet { get; private set; } = true;
 
         public bool IsParsed { get; set; }
 
@@ -39,6 +41,8 @@ namespace MagicOnion.CodeGenerator
                 { "c|conditionalsymbol=", "[optional, default=empty]conditional compiler symbol", x => { ConditionalSymbols.AddRange(x.Split(',')); } },
                 { "n|namespace=", "[optional, default=MagicOnion]Set namespace root name", x => { NamespaceRoot = x; } },
                 { "a|asyncsuffix", "[optional, default=false]Use methodName to async suffix", _ => { IsAsyncSuffix = true; } },
+                { "f|framework=", "[optional, default=first target framework]TargetFramework in the multi-target project", x => { TargetFramework = x; } },
+                { "q|quiet=", "[optional, default=true]Quiet display option for workspace failures", (bool x) => { Quiet = x; } },
             };
             if (args.Length == 0)
             {
@@ -69,7 +73,7 @@ namespace MagicOnion.CodeGenerator
 
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var cmdArgs = new CommandlineArguments(args);
             if (!cmdArgs.IsParsed)
@@ -80,11 +84,12 @@ namespace MagicOnion.CodeGenerator
             // Generator Start...
 
             var sw = Stopwatch.StartNew();
-            Console.WriteLine("Project Compilation Start:" + cmdArgs.InputPath);
+            Console.WriteLine("Project Compilation Start: " + cmdArgs.InputPath);
 
-            var collector = new MethodCollector(cmdArgs.InputPath, cmdArgs.ConditionalSymbols);
+            var collector = await MethodCollector.CreateCollector(cmdArgs.InputPath, cmdArgs.ConditionalSymbols,
+                cmdArgs.TargetFramework, cmdArgs.Quiet);
 
-            Console.WriteLine("Project Compilation Complete:" + sw.Elapsed.ToString());
+            Console.WriteLine("Project Compilation Complete: " + sw.Elapsed.ToString());
             Console.WriteLine();
 
             sw.Restart();
@@ -96,7 +101,7 @@ namespace MagicOnion.CodeGenerator
             EnumSerializationInfo[] enumInfos;
             ExtractResolverInfo(definitions, out genericInfos, out enumInfos);
 
-            Console.WriteLine("Method Collect Complete:" + sw.Elapsed.ToString());
+            Console.WriteLine("Method Collect Complete: " + sw.Elapsed.ToString());
 
             Console.WriteLine("Output Generation Start");
             sw.Restart();
@@ -150,7 +155,7 @@ namespace MagicOnion.CodeGenerator
             }
             Output(cmdArgs.OutputPath, sb.ToString());
 
-            Console.WriteLine("String Generation Complete:" + sw.Elapsed.ToString());
+            Console.WriteLine("String Generation Complete: " + sw.Elapsed.ToString());
             Console.WriteLine();
         }
 
@@ -199,7 +204,7 @@ namespace MagicOnion.CodeGenerator
             "MessagePack.Nil",
 
             // and arrays
-            
+
             "short[]",
             "int[]",
             "long[]",
