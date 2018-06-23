@@ -5,11 +5,11 @@
     <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -18,10 +18,10 @@
     <EmbeddedResource Remove="Extensions\**" />
     <None Remove="Extensions\**" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\..\Common.NetCore\Samples.Common.NetCore.csproj" />
-    <ProjectReference Include="..\ChatServerDefinition\Samples.ChatServerDefinition.csproj" />
+    <ProjectReference Include="..\SimpleServerDefinition\Samples.SimpleServerDefinition.csproj" />
   </ItemGroup>
   
   <ItemGroup>

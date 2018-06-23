@@ -3,8 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
-    <RootNamespace>Samples.ChatServer</RootNamespace>
-    <AssemblyName>Samples.ChatServer</AssemblyName>
+    <AssemblyName>SimpleServer</AssemblyName>
     <ServerGarbageCollection>true</ServerGarbageCollection>
     <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
   </PropertyGroup>
@@ -12,7 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\MagicOnion.HttpGateway\MagicOnion.HttpGateway.csproj" />
     <ProjectReference Include="..\..\Common.AspNetCore\Samples.Common.AspNetCore.csproj" />
-    <ProjectReference Include="..\ChatServerDefinition\Samples.ChatServerDefinition.csproj" />
+    <ProjectReference Include="..\SimpleServerDefinition\Samples.SimpleServerDefinition.csproj" />
   </ItemGroup>
 
   <ItemGroup>

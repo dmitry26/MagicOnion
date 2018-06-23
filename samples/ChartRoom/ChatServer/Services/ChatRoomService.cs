@@ -1,6 +1,6 @@
-﻿using MagicOnion;
+﻿using Dmo.Extensions.MagicOnion;
+using MagicOnion;
 using MagicOnion.Server;
-using MagicOnion.Server.Extensions;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

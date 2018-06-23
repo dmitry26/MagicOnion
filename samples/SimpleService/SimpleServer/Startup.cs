@@ -11,21 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using System;
-using System.IO;
-using Dmo.Extensions.Configuration;
-using Dmo.Extensions.Logging;
-using Dmo.Extensions.MagicOnion;
-using Grpc.Core;
-using MagicOnion;
-using MagicOnion.HttpGateway.Swagger;
-using MagicOnion.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
-namespace Samples.ChatServer
+namespace Samples.SimpleServer
 {
 	public class Startup
 	{
@@ -42,8 +34,8 @@ namespace Samples.ChatServer
 		}
 
 		public void Configure(IApplicationBuilder app)
-		{
-			app.UseMagicOnion();			
+		{			
+			app.UseMagicOnion();
 		}
 	}
 }

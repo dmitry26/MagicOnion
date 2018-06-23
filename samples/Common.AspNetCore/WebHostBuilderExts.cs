@@ -11,39 +11,22 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using System;
-using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Dmo.Extensions.Configuration;
-using Dmo.Extensions.Logging;
-using Dmo.Extensions.MagicOnion;
-using Grpc.Core;
-using MagicOnion;
-using MagicOnion.HttpGateway.Swagger;
-using MagicOnion.Server;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
-namespace Samples.ChatServer
+namespace Dmo.Extensions.Serilog
 {
-	public class Startup
+	public static class WebHostBuilderExts
 	{
-		public Startup(IConfiguration configuration)
-		{
-			Configuration = configuration;
-		}
-
-		public IConfiguration Configuration { get; }
-
-		public void ConfigureServices(IServiceCollection services)
-		{
-			services.AddMagicOnion(Configuration);			
-		}
-
-		public void Configure(IApplicationBuilder app)
-		{
-			app.UseMagicOnion();			
-		}
+		public static IWebHostBuilder UseSerilogFromConfig(this IWebHostBuilder builder) =>
+			(builder ?? throw new ArgumentNullException(nameof(builder)))
+				.UseSerilog((ctx,cfg) => cfg.ReadFrom.Configuration(ctx.Configuration));		
 	}
 }

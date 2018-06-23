@@ -16,22 +16,21 @@ using System;
 using Dmo.Extensions.Configuration;
 using Dmo.Extensions.Serilog;
 using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Samples.ChatServer
+namespace Samples.SimpleServer
 {
-    class Program
-    {
+	class Program
+	{
 		static void Main(string[] args)
-        {
+		{
 			Console.Title = System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-			CreateWebHostBuilder(args).Build().Run();
+			CreateWebHostBuilder(args).Build().Run();			
 		}
 
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-			WebHost.CreateDefaultBuilder(CmdArgHelper.WithoutShortSwitches(args))
+			WebHost.CreateDefaultBuilder(CmdArgHelper.WithoutShortSwitches(args))						
 				.UseStartup<Startup>()
 				.UseSerilogFromConfig();
 	}

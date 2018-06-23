@@ -14,12 +14,13 @@
 
 using System;
 using System.Threading.Tasks;
+using Dmo.Extensions.Configuration;
 using Dmo.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace Samples.ChatClient
+namespace Samples.SimpleClient
 {
 	class Program
 	{
@@ -27,8 +28,8 @@ namespace Samples.ChatClient
 		{
 			try
 			{
-				Console.Title = System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
+				Console.Title = System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetExecutingAssembly().Location);				
+				
 				await RunAsync(args);
 			}
 			catch (Exception x)
@@ -37,8 +38,6 @@ namespace Samples.ChatClient
 				Console.ReadLine();
 			}
 		}
-
-		private static void CurrentDomain_UnhandledException(object sender,UnhandledExceptionEventArgs e) => throw new NotImplementedException();
 
 		static async Task RunAsync(string[] args)
 		{
@@ -50,7 +49,7 @@ namespace Samples.ChatClient
 				})
 				.ConfigureServices((hostContext,services) =>
 				{
-					services.AddScoped<IHostedService,ChatRoomService>();
+					services.AddScoped<IHostedService,SimpleService>();
 					services.AddMagicOnion(hostContext.Configuration);
 				})
 				.UseSerilog((hostContext,config) => config.ReadFrom.Configuration(hostContext.Configuration));

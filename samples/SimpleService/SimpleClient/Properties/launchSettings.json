@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Samples.SimpleClient": {
+      "commandName": "Project",
+      "commandLineArgs": "--GrpcServerPort=123456"
+    }
+  }
+}
